@@ -1,0 +1,22 @@
+spring:
+    application:
+        name: securitywithjwt
+    datasource:
+        url: jdbc:postgresql://localhost:5432/springjwt
+        username: postgres
+        password: postgres
+        driverClassName: org.postgresql.Driver
+    #hibernate
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: false
+        database: postgresql
+
+security:
+    jwt:
+        secret-key: 75ab052bb5e9f40dbc0100e37d492149e7202414a4a820047f27baf4491accca
+        expiration-time: 3600000
+
+server:
+    port: 8080
