@@ -13,10 +13,13 @@ spring:
         show-sql: false
         database: postgresql
 
-security:
-    jwt:
-        secret-key: 75ab052bb5e9f40dbc0100e37d492149e7202414a4a820047f27baf4491accca
-        expiration-time: 3600000
+application:
+    security:
+        jwt:
+            secret-key: 75ab052bb5e9f40dbc0100e37d492149e7202414a4a820047f27baf4491accca
+            expiration-time: 3600000
+    cors:
+        allowed-origins: http://localhost:4200,http://localhost:8080
 
 server:
     port: 8080
