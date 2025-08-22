@@ -16,19 +16,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 @Table(name = "users")
 @Entity
-@Getter
-@Setter
 public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
-    private UUID id;
+    private UUID uuid;
 
     @Column(nullable = false)
     private String fullName;
@@ -51,6 +47,39 @@ public class User implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO: add roles
         return List.of(); // empty role list
+    }
+
+    protected User() {}
+
+    private User(UserBuilder builder) {
+        this.fullName = builder.fullName;
+        this.email = builder.email;
+        this.password = builder.password;
+    }
+
+    public static class UserBuilder {
+        private final String fullName;
+        private final String email;
+        private final String password;
+
+        public UserBuilder (String fullName, String email, String password){
+            if (fullName == null || fullName.isEmpty()){
+                throw new IllegalArgumentException("Name is required");
+            }
+            if (email == null || email.isEmpty()){
+                throw new IllegalArgumentException("Email is required");
+            }
+            if (password == null || password.isEmpty()){
+                throw new IllegalArgumentException("Password is required");
+            }
+            this.fullName = fullName;
+            this.email = email;
+            this.password = password;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 
     @Override
@@ -81,5 +110,25 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 }
